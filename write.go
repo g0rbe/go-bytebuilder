@@ -1,8 +1,8 @@
 package bytebuilder
 
 import (
+	"crypto/rand"
 	"io"
-	"math/rand"
 	"time"
 )
 
@@ -37,12 +37,14 @@ func (b *Buffer) WriteGMTUnixTime32(time time.Time) {
 }
 
 // WriteRandom appends n random bytes to b.
-func (b *Buffer) WriteRandom(n int) error {
+// If failed to reading random failed, this function panic.
+func (b *Buffer) WriteRandom(n int) {
 	v := make([]byte, n)
 
 	_, err := rand.Read(v)
-
-	return err
+	if err != nil {
+		panic("failed to read rand: " + err.Error())
+	}
 }
 
 // WriteBytes appends bytes at the end of in.
