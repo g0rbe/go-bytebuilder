@@ -2,6 +2,8 @@ package bytebuilder
 
 import (
 	"io"
+	"math/rand"
+	"time"
 )
 
 // WriteBytes appends bytes at the end of b.
@@ -27,6 +29,20 @@ func (b *Buffer) WriteUint24(v uint32) {
 // WriteUint32 appends v at the end of b.
 func (b *Buffer) WriteUint32(v uint32) {
 	b.WriteBytes(byte(v>>24), byte(v>>16), byte(v>>8), byte(v))
+}
+
+// WriteGMTUnixTime32 appends time to b in 32 bit unix format.
+func (b *Buffer) WriteGMTUnixTime32(time time.Time) {
+	b.WriteUint32(uint32(time.Unix()))
+}
+
+// WriteRandom appends n random bytes to b.
+func (b *Buffer) WriteRandom(n int) error {
+	v := make([]byte, n)
+
+	_, err := rand.Read(v)
+
+	return err
 }
 
 // WriteBytes appends bytes at the end of in.

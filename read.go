@@ -3,6 +3,7 @@ package bytebuilder
 import (
 	"fmt"
 	"io"
+	"time"
 )
 
 // ReadBytes removes the first n bytes from b and returns it.
@@ -71,6 +72,16 @@ func (b *Buffer) ReadUint32() (uint32, bool) {
 	}
 
 	return uint32(v[0])<<24 | uint32(v[1])<<16 | uint32(v[2])<<8 | uint32(v[3]), true
+}
+
+func (b *Buffer) ReadGMTUnixTime32() (time.Time, bool) {
+
+	v, ok := b.ReadUint32()
+	if !ok {
+		return time.Time{}, false
+	}
+
+	return time.Unix(int64(v), 0), true
 }
 
 // ReadBytes removes the first n bytes from in and returns it.
