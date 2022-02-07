@@ -44,4 +44,6 @@ func (b *Buffer) WriteRandom(n int) {
 	if err != nil {
 		panic("failed to read rand: " + err.Error())
 	}
+
+	b.WriteBytes(v...)
 }
