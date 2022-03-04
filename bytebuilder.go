@@ -21,25 +21,9 @@ func NewEmpty() Buffer {
 // as an error to be reported.
 func ReadAll(r io.Reader) (Buffer, error) {
 
-	buf := Buffer{b: make([]byte, 0, 512)}
+	b, err := io.ReadAll(r)
 
-	for {
-		if len(buf.b) == cap(buf.b) {
-			buf.b = append(buf.b, 0)[:len(buf.b)]
-		}
-
-		n, err := r.Read(buf.b[len(buf.b):cap(buf.b)])
-
-		buf.b = buf.b[:len(buf.b)+n]
-
-		if err != nil {
-			if err == io.EOF {
-				err = nil
-			}
-			return buf, err
-		}
-	}
-
+	return Buffer{b: b}, err
 }
 
 // Empty returns whether b is empty.
