@@ -1,3 +1,3 @@
-module github.com/g0rbe/bytebuilder
+module github.com/elmasy-com/bytebuilder
 
 go 1.17
