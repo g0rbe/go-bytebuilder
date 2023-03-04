@@ -72,6 +72,18 @@ func (b *Buffer) ReadUint32() (uint32, bool) {
 	return uint32(v[0])<<24 | uint32(v[1])<<16 | uint32(v[2])<<8 | uint32(v[3]), true
 }
 
+// ReadUint64 removes the first bytes from b and returns it as an uint64.
+// The bool indicates whether the read was successful.
+func (b *Buffer) ReadUint64() (uint64, bool) {
+
+	v := b.ReadBytes(8)
+	if v == nil {
+		return 0, false
+	}
+
+	return uint64(v[0])<<56 | uint64(v[1])<<48 | uint64(v[2])<<40 | uint64(v[3])<<32 | uint64(v[4])<<24 | uint64(v[5])<<16 | uint64(v[6])<<8 | uint64(v[7]), true
+}
+
 // ReadInt removes the first bytes (depends on bitSize) from b and returns it as an int.
 func (b *Buffer) ReadInt(bitSize int) (int, bool) {
 
