@@ -61,20 +61,15 @@ func (b *Buffer) WriteInt64(v int64) {
 }
 
 // WriteInt append v at the end of b with size bitSize.
-func (b *Buffer) WriteInt(v int, bitSize int) {
-	switch bitSize {
-	case 8:
-		b.WriteUint8(uint8(v))
-	case 16:
-		b.WriteUint16(uint16(v))
-	case 24:
-		b.WriteUint24(uint32(v))
+// The number of bytes depends on IntSize.
+func (b *Buffer) WriteInt(v int) {
+	switch IntSize {
 	case 32:
 		b.WriteUint32(uint32(v))
 	case 64:
 		b.WriteUint64(uint64(v))
 	default:
-		panic("invalid bitSize value")
+		panic("invalid IntSize")
 	}
 }
 
@@ -98,12 +93,25 @@ func (b *Buffer) WriteRandom(n int) {
 }
 
 // WriteVector appends the length of bytes then the bytes itself.
-// The length type is depend on bitSize (eg.: uint8, uint16, uint24, uint32).
+// The length type is depend on bitSize (eg.: uint8, uint16, uint24, uint32, uint64).
 // Therefore, bitSize must be 8/16/24/32/64.
 // If bitSize is an invalid number, this function panics.
 func (b *Buffer) WriteVector(v []byte, bitSize int) {
 
-	b.WriteInt(len(v), bitSize)
+	switch bitSize {
+	case 8:
+		b.WriteUint8(uint8(len(v)))
+	case 16:
+		b.WriteUint16(uint16(len(v)))
+	case 24:
+		b.WriteUint24(uint32(len(v)))
+	case 32:
+		b.WriteUint32(uint32(len(v)))
+	case 64:
+		b.WriteUint64(uint64(len(v)))
+	default:
+		panic("invalid bitSize value")
+	}
 
 	b.WriteBytes(v...)
 }
