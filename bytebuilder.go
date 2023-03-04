@@ -2,6 +2,12 @@ package bytebuilder
 
 import "io"
 
+// From: https://cs.opensource.google/go/go/+/refs/tags/go1.20.1:src/strconv/atoi.go;drc=cf26fbb1f6d9644f447342f42d2dddcbe9ceda61;l=68
+const intSize = 32 << (^uint(0) >> 63)
+
+// IntSize is the size in bits of an int or uint value.
+const IntSize = intSize
+
 type Buffer struct {
 	b []byte
 }
