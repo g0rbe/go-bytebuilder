@@ -21,6 +21,11 @@ func NewEmpty() Buffer {
 	return Buffer{b: make([]byte, 0)}
 }
 
+// NewWithSize creates a Buffer with a byte slice of length n.
+func NewWithSize(n int) Buffer {
+	return Buffer{b: make([]byte, n)}
+}
+
 // ReadAll reads from r until an error or EOF and returns a Buffer from the data it read.
 // A successful call returns err == nil, not err == EOF. Because ReadAll is
 // defined to read from src until EOF, it does not treat an EOF from Read
