@@ -1,6 +1,6 @@
 # bytebuilder
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/elmasy-com/bytebuilder.svg)](https://pkg.go.dev/github.com/elmasy-com/bytebuilder)
+[![Go Reference](https://pkg.go.dev/badge/github.com/g0rbe/go-bytebuilder.svg)](https://pkg.go.dev/github.com/g0rbe/go-bytebuilder)
 
 Golang API to manipulate byte slices.
 
